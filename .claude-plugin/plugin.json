@@ -1,10 +1,21 @@
 {
   "name": "schema-migrations",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Prepare database schema migrations as a reviewable package: Up/Down SQL, an updated Redgate Data Modeler XML model, a colour-coded diff diagram, a clean schema diagram and a what's new note, then stop for review before any code depends on it.",
-  "author": { "name": "Nicolas Letullier", "url": "https://github.com/nletullier" },
+  "author": {
+    "name": "Nicolas Letullier",
+    "url": "https://github.com/nletullier"
+  },
   "homepage": "https://github.com/nletullier/schema-migrations",
   "repository": "https://github.com/nletullier/schema-migrations",
   "license": "MIT",
-  "keywords": ["database", "migrations", "postgresql", "schema", "erd", "redgate", "data-modeler"]
+  "keywords": [
+    "database",
+    "migrations",
+    "postgresql",
+    "schema",
+    "erd",
+    "redgate",
+    "data-modeler"
+  ]
 }

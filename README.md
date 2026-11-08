@@ -87,6 +87,12 @@ The spec format is documented in
 [`references/spec-format.md`](skills/schema-migrations/references/spec-format.md), with
 [complete examples](skills/schema-migrations/references/examples).
 
+## .NET and EF Core
+
+[`dotnet/`](dotnet) explains how to run these SQL migrations with EF Core as a plain migration runner
+(database first: no entity, no model snapshot to keep in sync), why it is worth it, and ships a working
+template: the data project, the scripts that create and apply migrations, and the plugin configuration.
+
 ## What it does well, and what it does not
 
 - Additions, alterations (type, nullability, default, checks, renames), drops, indexes (unique, partial),

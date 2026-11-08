@@ -1,0 +1,11 @@
+{
+  "language": "en",
+  "dialect": "postgresql",
+  "baseline": "src/MyApp.Data/Migrations/baseline.xml",
+  "migrations": {
+    "dir": "src/MyApp.Data/Migrations",
+    "create": "./add-migration.sh {name}",
+    "up": "{id}.Up.sql",
+    "down": "{id}.Down.sql"
+  }
+}

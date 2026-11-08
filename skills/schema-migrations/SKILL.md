@@ -57,8 +57,8 @@ Without `create`, the script creates the folder `<dir>/<yyyyMMddHHmmss>_<Name>/`
 files itself. With `create`, the command must leave that folder with the Up/Down files in it. If the
 project's migrations are code (EF Core, Alembic, Knex…), make `create` run the tool's own command and
 move its output into the folder, and make the migration load its `.sql` files, so the SQL stays the
-single source. For .NET, embed `Migrations\**\*.sql` with a `LogicalName` that leaves the folder out, so
-resource names do not change.
+single source. For .NET with EF Core, follow `${CLAUDE_SKILL_DIR}/../../dotnet/README.md` and copy its
+`template/` (EF Core as a plain runner of the SQL files, one folder per migration).
 
 ### 1. Gather every schema change of the piece of work first
 
