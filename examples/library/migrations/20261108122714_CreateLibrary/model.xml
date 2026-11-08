@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DatabaseModel VersionId="2.4">
+    <Name>library</Name>
+    <Description></Description>
+    <DatabaseEngine>
+        <Name>postgresql</Name>
+        <Version>17</Version>
+    </DatabaseEngine>
+    <Counters>
+        <Counter>
+            <Name>table</Name>
+            <Value>2</Value>
+            <Prefix>t</Prefix>
+        </Counter>
+        <Counter>
+            <Name>column</Name>
+            <Value>9</Value>
+            <Prefix>c</Prefix>
+        </Counter>
+        <Counter>
+            <Name>index</Name>
+            <Value>1</Value>
+            <Prefix>i</Prefix>
+        </Counter>
+        <Counter>
+            <Name>reference</Name>
+            <Value>1</Value>
+            <Prefix>r</Prefix>
+        </Counter>
+        <Counter>
+            <Name>table_check</Name>
+            <Value>1</Value>
+            <Prefix>tc</Prefix>
+        </Counter>
+        <Counter>
+            <Name>alternate_key</Name>
+            <Value>1</Value>
+            <Prefix>a</Prefix>
+        </Counter>
+        <Counter>
+            <Name>tableDisplay</Name>
+            <Value>2</Value>
+            <Prefix>td</Prefix>
+        </Counter>
+        <Counter>
+            <Name>referenceDisplay</Name>
+            <Value>1</Value>
+            <Prefix>rd</Prefix>
+        </Counter>
+        <Counter>
+            <Name>area</Name>
+            <Value>0</Value>
+            <Prefix>ar</Prefix>
+        </Counter>
+        <Counter>
+            <Name>text</Name>
+            <Value>0</Value>
+            <Prefix>tx</Prefix>
+        </Counter>
+        <Counter>
+            <Name>note</Name>
+            <Value>0</Value>
+            <Prefix>n</Prefix>
+        </Counter>
+    </Counters>
+    <AdditionalSQLBeforeCreate></AdditionalSQLBeforeCreate>
+    <AdditionalSQLAfterCreate></AdditionalSQLAfterCreate>
+    <AdditionalSQLBeforeDrop></AdditionalSQLBeforeDrop>
+    <AdditionalSQLAfterDrop></AdditionalSQLAfterDrop>
+    <Tables>
+        <Table Id="t1">
+            <Name>author</Name>
+            <Description>People who write books.</Description>
+            <Columns>
+                <Column Id="c1">
+                    <Name>id</Name>
+                    <Type>serial</Type>
+                    <Description>Identifier.</Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c2">
+                    <Name>name</Name>
+                    <Type>text</Type>
+                    <Description>Full name, as printed on the cover.</Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c3">
+                    <Name>email</Name>
+                    <Type>text</Type>
+                    <Description>Contact address, if known.</Description>
+                    <Nullable>true</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <PrimaryKey>
+                <Name>author_pk</Name>
+                <Columns>
+                    <Column>c1</Column>
+                </Columns>
+            </PrimaryKey>
+            <AlternateKeys>
+                <AlternateKey Id="a1">
+                    <Name>author_email_uk</Name>
+                    <Description>One author per address.</Description>
+                    <Columns>
+                        <Column>c3</Column>
+                    </Columns>
+                    <Properties/>
+                </AlternateKey>
+            </AlternateKeys>
+            <Indexes/>
+            <TableChecks/>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties/>
+        </Table>
+        <Table Id="t2">
+            <Name>book</Name>
+            <Description>Books of the catalogue.</Description>
+            <Columns>
+                <Column Id="c4">
+                    <Name>id</Name>
+                    <Type>serial</Type>
+                    <Description>Identifier.</Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c5">
+                    <Name>author_id</Name>
+                    <Type>int</Type>
+                    <Description>Author of the book.</Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c6">
+                    <Name>title</Name>
+                    <Type>text</Type>
+                    <Description>Title.</Description>
+                    <Nullable>false</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c7">
+                    <Name>pages</Name>
+                    <Type>int</Type>
+                    <Description>Number of pages.</Description>
+                    <Nullable>true</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression>pages &gt; 0</CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c8">
+                    <Name>isbn</Name>
+                    <Type>varchar(13)</Type>
+                    <Description>ISBN-13, digits only.</Description>
+                    <Nullable>true</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+                <Column Id="c9">
+                    <Name>publisher_name</Name>
+                    <Type>text</Type>
+                    <Description>Publisher, typed by hand.</Description>
+                    <Nullable>true</Nullable>
+                    <DefaultValue></DefaultValue>
+                    <CheckExpression></CheckExpression>
+                    <Properties/>
+                </Column>
+            </Columns>
+            <PrimaryKey>
+                <Name>book_pk</Name>
+                <Columns>
+                    <Column>c4</Column>
+                </Columns>
+            </PrimaryKey>
+            <AlternateKeys/>
+            <Indexes>
+                <Index Id="i1">
+                    <Name>ix_book_author</Name>
+                    <Description></Description>
+                    <Columns>
+                        <Column>
+                            <Column>c5</Column>
+                            <Ascending>true</Ascending>
+                        </Column>
+                        <Column>
+                            <Column>c6</Column>
+                            <Ascending>true</Ascending>
+                        </Column>
+                    </Columns>
+                    <Properties/>
+                </Index>
+            </Indexes>
+            <TableChecks>
+                <TableCheck Id="tc1">
+                    <Name>book_title_ck</Name>
+                    <Description>A title is never empty.</Description>
+                    <CheckExpression>char_length(title) &gt; 0</CheckExpression>
+                    <Properties/>
+                </TableCheck>
+            </TableChecks>
+            <AdditionalSQLBefore></AdditionalSQLBefore>
+            <AdditionalSQLAfter></AdditionalSQLAfter>
+            <Properties/>
+        </Table>
+    </Tables>
+    <ExternalTables/>
+    <Views/>
+    <MaterializedViews/>
+    <References>
+        <Reference Id="r1">
+            <Name>book_author</Name>
+            <Description>Deleting an author deletes their books.</Description>
+            <PKTable>t1</PKTable>
+            <FKTable>t2</FKTable>
+            <PKRole></PKRole>
+            <FKRole></FKRole>
+            <ReferenceColumns>
+                <ReferenceColumn>
+                    <PKColumn>c1</PKColumn>
+                    <FKColumn>c5</FKColumn>
+                </ReferenceColumn>
+            </ReferenceColumns>
+            <Cardinality>0..*</Cardinality>
+            <Mandatory>true</Mandatory>
+            <OnUpdateAction>None</OnUpdateAction>
+            <OnDeleteAction>Cascade</OnDeleteAction>
+            <Properties/>
+        </Reference>
+    </References>
+    <Sequences/>
+    <Notes/>
+    <Areas/>
+    <Texts/>
+    <TableDisplays>
+        <TableDisplay Id="td1">
+            <X>80.5</X>
+            <Y>100.5</Y>
+            <Width>150.0</Width>
+            <Height>73.0</Height>
+            <LineColor>#000000</LineColor>
+            <FillColor>#ffffff</FillColor>
+            <Table>t1</Table>
+            <FixedSize>false</FixedSize>
+        </TableDisplay>
+        <TableDisplay Id="td2">
+            <X>42.0</X>
+            <Y>260.0</Y>
+            <Width>228.0</Width>
+            <Height>115.0</Height>
+            <LineColor>#000000</LineColor>
+            <FillColor>#ffffff</FillColor>
+            <Table>t2</Table>
+            <FixedSize>false</FixedSize>
+        </TableDisplay>
+    </TableDisplays>
+    <ExternalTableDisplays/>
+    <ViewDisplays/>
+    <MaterializedViewDisplays/>
+    <ReferenceDisplays>
+        <ReferenceDisplay Id="rd1">
+            <Color>#000000</Color>
+            <Type>Vertical_2CP</Type>
+            <ControlPoints>
+                <ControlPoint>
+                    <X>155.5</X>
+                    <Y>173.5</Y>
+                </ControlPoint>
+                <ControlPoint>
+                    <X>155.5</X>
+                    <Y>260.0</Y>
+                </ControlPoint>
+            </ControlPoints>
+            <PkTableDisplay>td1</PkTableDisplay>
+            <FkTableDisplay>td2</FkTableDisplay>
+            <Reference>r1</Reference>
+        </ReferenceDisplay>
+    </ReferenceDisplays>
+    <Properties/>
+</DatabaseModel>

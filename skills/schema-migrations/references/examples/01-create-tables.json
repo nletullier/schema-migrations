@@ -1,0 +1,40 @@
+{
+  "name": "CreateLibrary",
+  "title": "Authors and books",
+  "summary": "The first tables of the library catalogue: authors and their books.",
+  "notes": {
+    "why": "We start cataloguing the library. A book has one author; an author can have many books.",
+    "deployment": "Apply the migration. The tables are empty: nothing else to do."
+  },
+  "createTables": [
+    {
+      "name": "author",
+      "description": "People who write books.",
+      "columns": [
+        {"name": "id", "type": "serial", "nullable": false, "description": "Identifier."},
+        {"name": "name", "type": "text", "nullable": false, "description": "Full name, as printed on the cover."},
+        {"name": "email", "type": "text", "nullable": true, "description": "Contact address, if known."}
+      ],
+      "uniqueKeys": [{"name": "author_email_uk", "columns": ["email"], "description": "One author per address."}]
+    },
+    {
+      "name": "book",
+      "description": "Books of the catalogue.",
+      "near": "author",
+      "columns": [
+        {"name": "id", "type": "serial", "nullable": false, "description": "Identifier."},
+        {"name": "author_id", "type": "int", "nullable": false, "description": "Author of the book."},
+        {"name": "title", "type": "text", "nullable": false, "description": "Title."},
+        {"name": "pages", "type": "int", "check": "pages > 0", "description": "Number of pages."},
+        {"name": "isbn", "type": "varchar(13)", "description": "ISBN-13, digits only."},
+        {"name": "publisher_name", "type": "text", "description": "Publisher, typed by hand."}
+      ],
+      "indexes": [{"name": "ix_book_author", "columns": ["author_id", {"name": "title", "order": "asc"}]}],
+      "checks": [{"name": "book_title_ck", "expression": "char_length(title) > 0", "description": "A title is never empty."}]
+    }
+  ],
+  "addReferences": [
+    {"name": "book_author", "from": "book", "columns": ["author_id"], "to": "author", "onDelete": "cascade",
+     "description": "Deleting an author deletes their books."}
+  ]
+}

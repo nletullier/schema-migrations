@@ -1,0 +1,43 @@
+{
+  "name": "AddPublishers",
+  "title": "Publishers become a table",
+  "summary": "Publishers get their own table, and each book points to its publisher instead of a hand-typed name.",
+  "notes": {
+    "why": "The same publisher was typed in many ways (« Gallimard », « gallimard », « Gallimard  »). A table gives one row per publisher, and books can be listed by publisher.",
+    "compatibility": "`book.publisher_name` stays in place and is still filled by the current version of the application, which does not know `publisher_id` yet. Nothing breaks during the deployment.",
+    "deployment": "1. Apply the migration: it creates the publishers from the names already typed and links the books.\n2. Deploy the application that writes `publisher_id`.",
+    "deferred": "`book.publisher_name` is dropped by a later migration, once no running version writes it any more (see `DropPublisherName`)."
+  },
+  "createTables": [
+    {
+      "name": "publisher",
+      "description": "Publishing houses.",
+      "near": "book",
+      "columns": [
+        {"name": "id", "type": "serial", "nullable": false, "description": "Identifier."},
+        {"name": "name", "type": "text", "nullable": false, "description": "Name of the house."}
+      ],
+      "uniqueKeys": [{"name": "publisher_name_uk", "columns": ["name"]}]
+    }
+  ],
+  "alterTables": [
+    {
+      "name": "book",
+      "addColumns": [{"name": "publisher_id", "type": "int", "description": "Publisher of the book."}],
+      "alterColumns": [
+        {"name": "isbn", "type": "varchar(17)", "description": "ISBN-13, with or without hyphens."},
+        {"name": "pages", "check": "pages > 0 AND pages < 20000"}
+      ],
+      "addIndexes": [{"name": "ux_book_isbn", "columns": ["isbn"], "unique": true, "where": "isbn IS NOT NULL",
+                      "description": "One book per ISBN."}]
+    }
+  ],
+  "addReferences": [
+    {"name": "book_publisher", "from": "book", "columns": ["publisher_id"], "to": "publisher", "onDelete": "set null",
+     "description": "Deleting a publisher keeps its books, without publisher."}
+  ],
+  "data": {
+    "description": "One publisher is created per distinct name already typed (spaces trimmed), and each book is linked to it. Running it again creates nothing new.",
+    "up": "INSERT INTO publisher (name)\nSELECT DISTINCT btrim(publisher_name) FROM book\nWHERE publisher_name IS NOT NULL AND btrim(publisher_name) <> ''\nON CONFLICT (name) DO NOTHING;\n\nUPDATE book b SET publisher_id = p.id\nFROM publisher p\nWHERE p.name = btrim(b.publisher_name) AND b.publisher_id IS NULL;"
+  }
+}

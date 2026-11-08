@@ -1,0 +1,11 @@
+{
+  "language": "en",
+  "dialect": "postgresql",
+  "baseline": "migrations/baseline.xml",
+  "migrations": {
+    "dir": "migrations",
+    "create": null,
+    "up": "{id}.up.sql",
+    "down": "{id}.down.sql"
+  }
+}

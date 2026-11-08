@@ -1,0 +1,18 @@
+{
+  "name": "DropPublisherName",
+  "title": "The hand-typed publisher name goes away",
+  "summary": "Second step of `AddPublishers`: `book.publisher_name` is dropped, and the author's `name` becomes `full_name`.",
+  "notes": {
+    "why": "Every running version of the application now writes `book.publisher_id`; the old column is dead weight.",
+    "compatibility": "Only deploy once the versions that wrote `publisher_name` are all stopped. The application must read `author.full_name` from this release on.",
+    "deployment": "1. Check that no running instance still writes `book.publisher_name`.\n2. Apply the migration and deploy the application in the same release."
+  },
+  "alterTables": [
+    {"name": "book", "dropColumns": ["publisher_name"]},
+    {"name": "author", "alterColumns": [{"name": "name", "rename": "full_name"}]}
+  ],
+  "data": {
+    "description": "Down puts the publisher's name back in `book.publisher_name` for the books that have one.",
+    "down": "UPDATE book b SET publisher_name = p.name FROM publisher p WHERE p.id = b.publisher_id;"
+  }
+}

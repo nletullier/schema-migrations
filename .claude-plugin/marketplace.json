@@ -1,0 +1,13 @@
+{
+  "name": "nletullier",
+  "owner": { "name": "Nicolas Letullier", "url": "https://github.com/nletullier" },
+  "metadata": { "description": "Claude Code plugins by Nicolas Letullier." },
+  "plugins": [
+    {
+      "name": "schema-migrations",
+      "source": "./",
+      "description": "Reviewable database schema migrations: SQL, data model, diff diagrams and release notes.",
+      "category": "development"
+    }
+  ]
+}
